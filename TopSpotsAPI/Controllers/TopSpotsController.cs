@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.IO;
 using Newtonsoft.Json;
 using TopSpotsAPI.Models;
+using System.Collections.Generic;
 
 namespace TopSpotsAPI.Controllers
 {
@@ -21,14 +22,25 @@ namespace TopSpotsAPI.Controllers
             return Ok(TopSpotsArray);
         }
 
-        [HttpPost]
-        public IHttpActionResult PostTopSpot(TopSpot TopSpot)
+        [HttpPost, Route("api/topspots")]
+        public IHttpActionResult Post(TopSpot topSpot)
         {
-            TopSpot.Name = "Origin Code Academy";
-            TopSpot.Description = "Coding Bootcamp";
-           // TopSpot.Location[0] = 32.7151;
-         //   TopSpot.Location[1] = -117.1642;
-            return Ok(TopSpot);
+            string topSpots = File.ReadAllText("C:\\Users\\SCali\\dev\\TopSpotsAPI\\TopSpotsAPI\\topspots.json");
+            List<TopSpot> TopSpotsArray = JsonConvert.DeserializeObject<List<TopSpot>>(topSpots);
+            TopSpotsArray.Add(topSpot);
+            topSpots = JsonConvert.SerializeObject(TopSpotsArray);
+            File.WriteAllText("C:\\Users\\SCali\\dev\\TopSpotsAPI\\TopSpotsAPI\\topspots.json", topSpots);
+            return Ok();
+        }
+        [HttpDelete, Route("api/topspots")]
+        public IHttpActionResult Delete(TopSpot topSpot)
+        {
+            string topSpots = File.ReadAllText("C:\\Users\\SCali\\dev\\TopSpotsAPI\\TopSpotsAPI\\topspots.json");
+            List<TopSpot> TopSpotsArray = JsonConvert.DeserializeObject<List<TopSpot>>(topSpots);
+            TopSpotsArray.Remove(topSpot);
+            topSpots = JsonConvert.SerializeObject(TopSpotsArray);
+            File.WriteAllText("C:\\Users\\SCali\\dev\\TopSpotsAPI\\TopSpotsAPI\\topspots.json", topSpots);
+            return Ok();
         }
     }
 }
