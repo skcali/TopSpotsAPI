@@ -1,0 +1,24 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Top Spots in San Diego</title>
+</head>
+<body>
+  <div ng-app="SanDiegoTopSpots">
+    <div ng-controller="printTable as printTable">
+      <table border=1>
+        <tr ng-repeat="places in printTable.places">
+          <td>{{places.name}}</td>
+          <td>{{places.description}}</td>
+          <td><button ng-click="printTable.locationLink(places.location[0], places.location[1])">{{places.location}}</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
